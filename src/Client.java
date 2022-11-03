@@ -1,23 +1,25 @@
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class Client {
 
     //---------------------------------Attributs---------------------------------
-    // uuid of the client
-    private UUID uuid;
+    private int id;
     private String nom;
     private String prenom;
     private ArrayList<Product> panierAchat;
 
+    private static int customerCounter = 0;
+
     //---------------------------------Constructeur---------------------------------
 
-    public Client(UUID uuid, String nom, String prenom, ArrayList<Product> panierAchat) {
-        this.uuid = uuid;
+    public Client(int id, String nom, String prenom) {
+        Client.customerCounter++;
+        this.id = Client.customerCounter;
         this.nom = nom;
         this.prenom = prenom;
-        this.panierAchat = panierAchat;
+        this.panierAchat = new ArrayList<Product>();
     }
+
 
     //---------------------------------Méthodes---------------------------------
     // add a product to the client's cart
@@ -52,21 +54,22 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "uuid=" + uuid +
+                "id=" + id +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", panierAchat=" + panierAchat +
                 '}';
     }
 
+
     //---------------------------------Getters and Setters---------------------------------
 
-    public UUID getUuid() {
-        return uuid;
+    public int getId() {
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
