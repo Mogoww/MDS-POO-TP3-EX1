@@ -4,12 +4,14 @@ import java.util.UUID;
 public class Magasin {
 
     //---------------------------------Attributs---------------------------------
+    private String name;
     private ArrayList<Product> products;
     private ArrayList<Client> clients;
     private ArrayList<Commande> commandes;
 
     //---------------------------------Constructeur---------------------------------
-    public Magasin() {
+    public Magasin(String name) {
+        this.name = name;
         this.products = new ArrayList<Product>();
         this.clients = new ArrayList<Client>();
         this.commandes = new ArrayList<Commande>();
@@ -37,11 +39,20 @@ public class Magasin {
         }
     }
 
-    // update disponibilite of a product by title
-    public void updateDisponibilite(String title, int disponibilite) {
+    // add disponibilite of a product by title
+    public void addDisponibilite(String title, int disponibilite) {
         for (Product product : this.products) {
             if (product.getTitre().equals(title)) {
-                product.updateDisponibilite(disponibilite);
+                product.addDisponibilite(disponibilite);
+            }
+        }
+    }
+
+    // subtract disponibilite of a product by title
+    public void subtractDisponibilite(String title, int disponibilite) {
+        for (Product product : this.products) {
+            if (product.getTitre().equals(title)) {
+                product.subtractDisponibilite(disponibilite);
             }
         }
     }
@@ -82,7 +93,7 @@ public class Magasin {
     public void addProductToCart(String name, int id, Product product) {
         Client client = this.getClient(id, name);
         if (client != null) {
-            client.addProductToCart(product);
+            client.addProductToCart(product.getTitre());
         }
     }
 
@@ -90,16 +101,23 @@ public class Magasin {
     public void deleteProductFromCart(String name, int id, Product product){
        Client client = this.getClient(id, name);
          if (client != null) {
-              client.deleteProductInCart(product.getTitre());
+            client.deleteProductInCart(product.getTitre());
          }
     }
 
-    // update product in cart
-    public void updateProductInCart(String name, int id, Product product, int quantity){
+    // add product in cart
+    public void addProductInCart(String name, int id, Product product, int quantity){
         Client client = this.getClient(id, name);
         if (client != null) {
-            client.updateProductInCart(product.getTitre(), quantity);
-//            this.products
+            client.addProductToCart(product.getTitre());
+        }
+    }
+
+    // subtract product in cart
+    public void subtractProductInCart(String name, int id, Product product, int quantity){
+        Client client = this.getClient(id, name);
+        if (client != null) {
+            client.deleteProductInCart(product.getTitre());
         }
     }
 
@@ -138,4 +156,13 @@ public class Magasin {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Magasin{" +
+                "name='" + name + '\'' +
+                ", products=" + products +
+                ", clients=" + clients +
+                ", commandes=" + commandes +
+                '}';
+    }
 }

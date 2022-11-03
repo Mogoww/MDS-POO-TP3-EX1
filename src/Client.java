@@ -12,7 +12,7 @@ public class Client {
 
     //---------------------------------Constructeur---------------------------------
 
-    public Client(int id, String nom, String prenom) {
+    public Client(String nom, String prenom) {
         Client.customerCounter++;
         this.id = Client.customerCounter;
         this.nom = nom;
@@ -22,31 +22,51 @@ public class Client {
 
 
     //---------------------------------Méthodes---------------------------------
-    // add a product to the client's cart
-    public void addProductToCart(Product product) {
-        this.panierAchat.add(new Product(product.getTitre(), product.getDescription(), 1, product.getPrixUnitaire()));
-    }
 
     // clear the client's cart
     public void clearCart() {
         this.panierAchat.clear();
     }
 
-    // update number of products in the client's cart
-    public void updateProductInCart(String title, int quantity) {
+    // get product by name
+    public Product getProductByName(String name) {
         for (Product product : this.panierAchat) {
-            if (product.getTitre().equals(title)) {
-                product.updateDisponibilite(quantity);
+            if (product.getTitre().equals(name)) {
+                return product;
             }
+        }
+        return null;
+    }
+
+    // add number of products in the client's cart
+    public void addQuantityProductInCart(String name, int quantity) {
+        Product product = getProductByName(name);
+        if (product != null) {
+            product.addDisponibilite(quantity);
+        }
+    }
+
+    // subtract number of products in the client's cart
+    public void subtractQuantityProductInCart(String name, int quantity) {
+        Product product = getProductByName(name);
+        if (product != null) {
+            product.subtractDisponibilite(quantity);
+        }
+    }
+
+    // add a product to the client's cart
+    public void addProductToCart(String name) {
+        Product product = getProductByName(name);
+        if (product != null) {
+            this.panierAchat.add(new Product(product.getTitre(),product.getDescription(),  1, product.getPrixUnitaire()));
         }
     }
 
     // delete a product in cart by title
-    public void deleteProductInCart(String title) {
-        for (Product product : this.panierAchat) {
-            if (product.getTitre().equals(title)) {
-                this.panierAchat.remove(product);
-            }
+    public void deleteProductInCart(String name) {
+        Product product = getProductByName(name);
+        if (product != null) {
+            this.panierAchat.remove(product);
         }
     }
 
