@@ -1,4 +1,4 @@
-public class Produit {
+public class Product {
 
     // attributs
     private String titre;
@@ -10,7 +10,7 @@ public class Produit {
     //---------------------------------Constructeur---------------------------------
 
 
-    public Produit(String titre, String description, int disponibilite, double prixUnitaire) {
+    public Product(String titre, String description, int disponibilite, double prixUnitaire) {
         this.titre = titre;
         this.description = description;
         this.disponibilite = disponibilite;
@@ -18,18 +18,12 @@ public class Produit {
     }
 
     //---------------------------------Méthodes---------------------------------
-    // ajouter un quantité de produit
-    public void ajouterProduit(int quantite) {
-        this.disponibilite += quantite;
+    // update disponibilite of a product
+    public void updateDisponibilite(int disponibilite) {
+        // update disponibilite
+        this.disponibilite = disponibilite;
     }
-    // retirer un quantité de produit
-    public void retirerProduit(int quantite) {
-         if (this.disponibilite >= quantite) {
-             this.disponibilite = 0;
-         }else {
-             this.disponibilite -= quantite;
-         }
-    }
+
 
     @Override
     public String toString() {
