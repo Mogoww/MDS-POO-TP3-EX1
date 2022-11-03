@@ -6,13 +6,13 @@ public class Magasin {
     //---------------------------------Attributs---------------------------------
     private ArrayList<Product> products;
     private ArrayList<Client> clients;
-//    private ArrayList<Commande> commandes;
+    private ArrayList<Commande> commandes;
 
     //---------------------------------Constructeur---------------------------------
     public Magasin() {
         this.products = new ArrayList<Product>();
         this.clients = new ArrayList<Client>();
-//        this.commandes = new ArrayList<Commande>();
+        this.commandes = new ArrayList<Commande>();
     }
 
     //---------------------------------Méthodes---------------------------------
@@ -68,6 +68,16 @@ public class Magasin {
         return null;
     }
 
+    // return a command by id
+    public Commande getCommande(int id) {
+        for (Commande commande : this.commandes) {
+            if (commande.getId() == id) {
+                return commande;
+            }
+        }
+        return null;
+    }
+
     // add product to cart
     public void addProductToCart(String name, int id, Product product) {
         Client client = this.getClient(id, name);
@@ -89,6 +99,42 @@ public class Magasin {
         Client client = this.getClient(id, name);
         if (client != null) {
             client.updateProductInCart(product.getTitre(), quantity);
+//            this.products
+        }
+    }
+
+    // validate command
+    public void validateCommand(String name, int id) {
+        Client client = this.getClient(id, name);
+        if (client != null) {
+            Commande commande = new Commande(client, client.getPanierAchat());
+            this.commandes.add(commande);
+            client.clearCart();
+        }
+    }
+
+    // update status of a command
+    public void updateStatusCommand(String name, int id, String status, int idCommande) {
+        Commande commande = this.getCommande(idCommande);
+        Client client = this.getClient(id, name);
+        if (client != null && commande != null) {
+            commande.setStatus(Commande.Status.LIVREE);
+        }
+    }
+
+
+
+
+
+    // display all commands of a client
+    public void displayCommands(String name, int id) {
+        Client client = this.getClient(id, name);
+        if (client != null) {
+            for (Commande commande : this.commandes) {
+                if (commande.getClient().equals(client)) {
+                    System.out.println(commande);
+                }
+            }
         }
     }
 

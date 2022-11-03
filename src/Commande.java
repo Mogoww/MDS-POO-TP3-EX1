@@ -1,17 +1,26 @@
 import java.util.ArrayList;
 
 public class Commande {
-
+    private static int commandCounter = 0;
     //------------------------ Attributs ------------------------
+    private int id;
     private Client client;
     private ArrayList<Product> products;
-    private String status;
+    private Status status;
+
+    public enum Status {
+        EN_COURS,
+        LIVREE
+    }
 
     //------------------------ Constructeur ------------------------
     public Commande(Client client, ArrayList<Product> products) {
+        Commande.commandCounter++;
+        this.id = Commande.commandCounter;
         this.client = client;
         this.products = products;
-        this.status = "En cours";
+        this.status = Status.EN_COURS;
+
     }
 
     //------------------------ Méthodes ------------------------
@@ -19,6 +28,7 @@ public class Commande {
     @Override
     public String toString() {
         return "Commande{" +
+                "id=" + id +
                 "client=" + client +
                 ", products=" + products +
                 ", status='" + status + '\'' +
@@ -26,6 +36,14 @@ public class Commande {
     }
 
     //------------------------ Getters/Setters ------------------------
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Client getClient() {
         return client;
@@ -43,14 +61,11 @@ public class Commande {
         this.products = products;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        // if the status is "En cours", "En attente" or "Terminé" then we can update the status
-        if (status.equals("En cours") || status.equals("En attente") || status.equals("Terminé")) {
-            this.status = status;
-        }
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
